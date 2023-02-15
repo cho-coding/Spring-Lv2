@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface InstarRepository extends JpaRepository<Instar, Long> {
     List<Instar> findAllByOrderByModifiedAtDesc();
+    List<Instar> findByIdAndUser(User user,Long id);
 }
 
 /*

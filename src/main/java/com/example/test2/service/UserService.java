@@ -5,11 +5,12 @@ import com.example.test2.entity.User;
 import com.example.test2.jwt.JwtUtil;
 import com.example.test2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,12 +20,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-
     @Transactional
-    public void signup(SignupRequestDto signupRequestDto) {
+    public User signup(SignupRequestDto signupRequestDto, BindingResult bindingResult) {
+
+//        if (bindingResult.hasErrors()) {
+//            return null;
+//        }
         String username = signupRequestDto.getUsername();
         String password = signupRequestDto.getPassword();
-//        String email = signupRequestDto.getEmail();
 
         // 회원 중복 확인
         Optional<User> found = userRepository.findByUsername(username);
@@ -32,12 +35,14 @@ public class UserService {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
 
-//        User user = new User(username, password, email);
-//        userRepository.save(user);
+        User user = new User(username, password);
+        userRepository.save(user);
+
+        return user;
     }
 
     @Transactional(readOnly = true)
-    public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public String login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
@@ -50,7 +55,8 @@ public class UserService {
             throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
+    return "로그인 완료";
     }
 
 }

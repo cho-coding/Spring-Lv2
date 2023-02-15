@@ -47,7 +47,7 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken(String username, UserRoleEnum role) {
+    public String createToken(String username) {
         Date date = new Date();
 
         return BEARER_PREFIX +
@@ -55,7 +55,7 @@ public class JwtUtil {
                         //어떠한 공간에 Username을 넣어줄거다
                         .setSubject(username)
                         //어떠한 공간에 사용자의 권한을 넣어줄꺼고 그 권한을 가져올떄는 OAuthkey를 사용해서 넣을거다
-                        .claim(AUTHORIZATION_KEY, role)
+//                        .claim(AUTHORIZATION_KEY, role)
                         //이토큰을 언제까지 유효하게 열어둘지, Date는 토큰생성된 dage이며, getTime은 현재 토큰시간 60 * 60 * 1000L
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME))
                         //토큰이 언제 만들어졋는지에 대한 내용 Key객체
@@ -67,7 +67,7 @@ public class JwtUtil {
     }
 
     // 토큰 검증
-    public boolean validateToken(String token) {
+    public boolean valiadteToken(String token) {
         try {//내부적으로 토큰을 검중해준다. 아래꺼
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;

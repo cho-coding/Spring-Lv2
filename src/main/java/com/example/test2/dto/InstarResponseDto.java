@@ -10,17 +10,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class InstarResponseDto {
     private Long id;
-    private String username;
     private String contents;
-    private String password;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
+
     public InstarResponseDto(Instar instar) {
         this.id = instar.getId();
-        this.username = instar.getUsername();
         this.contents = instar.getContents();
-        this.password = instar.getPassword();
         this.createdAt = instar.getCreatedAt();
         this.modifiedAt = instar.getModifiedAt();
     }

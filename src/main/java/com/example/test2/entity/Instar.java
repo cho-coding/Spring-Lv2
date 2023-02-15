@@ -1,6 +1,7 @@
 package com.example.test2.entity;
 
 import com.example.test2.dto.InstarRequestDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,34 +11,28 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 public class Instar extends Timestamped {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    @Column(nullable = false)
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "USERS_ID", nullable = false)
+    private User user;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String contents;
 
-    @Column(nullable = false)
-    private String password;
-
-    public Instar(String username, String contents) {
-        this.username = username;
-        this.contents = contents;
-        this.password = password;
-    }
-
-    public Instar(InstarRequestDto requestDto) {
-        this.username = requestDto.getUsername();
+    @Builder
+    public Instar(InstarRequestDto requestDto,User user) {
         this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
+        this.user = user;
     }
 
-    public void update(InstarRequestDto instarRequestDto) {
-        this.username = instarRequestDto.getUsername();
+    public void update(InstarRequestDto instarRequestDto,User user) {
         this.contents = instarRequestDto.getContents();
-        this.password = instarRequestDto.getPassword();
+        this.user = user;
+
+
     }
 }
