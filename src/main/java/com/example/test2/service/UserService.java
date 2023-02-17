@@ -21,7 +21,7 @@ public class UserService {
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public User signup(SignupRequestDto signupRequestDto, BindingResult bindingResult) {
+    public String signup(SignupRequestDto signupRequestDto, BindingResult bindingResult) {
 
 //        if (bindingResult.hasErrors()) {
 //            return null;
@@ -38,7 +38,7 @@ public class UserService {
         User user = new User(username, password);
         userRepository.save(user);
 
-        return user;
+        return "회원가입 완료!";
     }
 
     @Transactional(readOnly = true)

@@ -1,5 +1,6 @@
 package com.example.test2.controller;
 
+import com.example.test2.dto.InstarResponseDto;
 import com.example.test2.dto.LoginRequestDto;
 import com.example.test2.dto.SignupRequestDto;
 import com.example.test2.entity.User;
@@ -28,7 +29,7 @@ public class UserController {
     // 회원가입
     @PostMapping("/signup")
     @ResponseBody
-    public User signup(@RequestBody SignupRequestDto signupRequestDto, @Valid BindingResult bindingResult) {
+    public String signup(@RequestBody SignupRequestDto signupRequestDto, @Valid BindingResult bindingResult) {
         return userService.signup(signupRequestDto,bindingResult);
     }
 

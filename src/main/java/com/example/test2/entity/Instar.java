@@ -21,16 +21,23 @@ public class Instar extends Timestamped {
     private Long id;
 
     @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
     private String contents;
+
+
 
     @Builder
     public Instar(InstarRequestDto requestDto,User user) {
         this.contents = requestDto.getContents();
+        this.title = requestDto.getTitle();
         this.user = user;
     }
 
     public void update(InstarRequestDto instarRequestDto,User user) {
         this.contents = instarRequestDto.getContents();
+        this.title = instarRequestDto.getTitle();
         this.user = user;
 
 

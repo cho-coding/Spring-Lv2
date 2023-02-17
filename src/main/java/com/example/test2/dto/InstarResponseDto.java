@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class InstarResponseDto {
     private Long id;
     private String contents;
+    private String title;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -18,6 +19,7 @@ public class InstarResponseDto {
     public InstarResponseDto(Instar instar) {
         this.id = instar.getId();
         this.contents = instar.getContents();
+        this.title = instar.getTitle();
         this.createdAt = instar.getCreatedAt();
         this.modifiedAt = instar.getModifiedAt();
     }
